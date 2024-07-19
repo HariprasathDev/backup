@@ -11,7 +11,6 @@ import Approved_List from './components/new_profile/Approved_List';
 import CountryTable from './components/CountryTable';
 import StateTable from './components/StateTable';
 import DistrictTable from './components/DistrictTable';
-import SignIn from './pages/Authentication/SignIn';
 import PlaceOfBirthList from './components/PlaceOfBirthList';
 import DasaBalanceList from './components/DasaBalanceList';
 import LagnamList from './components/LagnamList';
@@ -25,16 +24,10 @@ import HighesteducationsTable from './components/HighesteducationsTable';
 import UgdegreeTable from './components/UgdegreeTable';
 import AnnualincomesTable from './components/AnnualincomesTable';
 import ProfileForm from './components/new_profile/AddProfile';
-import Feature_profile from './components/new_profile/feature_profile';
-import AddProfile from './components/new_profile/AddProfile';
-import Datatablel from './components/DataTablel';
-import AdminPage from './components/new_profile/DataTable';
-import EditProfilePage from './components/EditProfilePage';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,24 +37,12 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  useEffect(() => {
-    setIsAuthenticated(localStorage.getItem('isAuthenticated') === 'true');
-  }, []);
-
   if (loading) {
     return <Loader />;
   }
 
-  if (!isAuthenticated && pathname !== '/signin') {
-    return <Navigate to="/signin" />;
-  }
-
   return (
     <Routes>
-      <Route
-        path="/signin"
-        element={<SignIn setIsAuthenticated={setIsAuthenticated} />}
-      />
       <Route
         path="*"
         element={
@@ -72,7 +53,7 @@ function App() {
                 element={
                   <>
                     <PageTitle title="" />
-                    <AddProfile />
+                    <ECommerce />
                   </>
                 }
               />
@@ -239,7 +220,7 @@ function App() {
                   </>
                 }
               />
-
+            
               <Route
                 path="/ProfileForm"
                 element={
@@ -249,30 +230,7 @@ function App() {
                   </>
                 }
               />
-
-              <Route
-                path="/feature_profile"
-                element={
-                  <>
-                    <PageTitle title="feature_profile" />
-                    <Feature_profile />
-                  </>
-                }
-              />
-
-              <Route
-                path="/DataTablel"
-                element={
-                  <>
-                    <PageTitle title="DataTablel" />
-                    <Datatablel columns={[]} apiEndpoint={''} />
-                  </>
-                }
-              />
-
-              <Route path="/admin" element={<AdminPage />} />
-              <Route path="/admin/edit/:ContentId" element={<EditProfilePage />} />
-
+              
             </Routes>
           </DefaultLayout>
         }
